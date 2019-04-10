@@ -1,17 +1,13 @@
-<h1>Welcome to Python Programming!</h1>
-
+<h1>Welcome to the D3 React Bootcamp!</h1>
 
 ---
-
 
 ## Agenda
 *Here's what we'll cover:*
 
-- Instructional team and classmate introductions.
+- Introductions
 - About General Assembly.
 - Course structure.
-- The final project.
-- Key concepts from the myGA prework.
 
 
 ---
@@ -19,49 +15,25 @@
 
 ## Taq Karim
 
-
 **Instructor**
 
 **[taqqui.karim@gmail.com](mailto:taqqui.karim@gmail.com)**
 
 -
 
-- Tech Lead @IxN, leading Demand Side ops on PlaceExchange
+- Tech Lead @IxN, leading Demand Side Ops on PlaceExchange
 - Formerly Director of Engineering @Honey
 - I have a great cat 🐱
 
 ---
-
-## Evan Kranzler
-
-**Instructional Associate**
-
-**[theelk801@gmail.com](mailto:theelk801@gmail.com)**
-
----
-
-## Front Lines
-
-Have a question about:
-
-- The campus?
-- Lost and found?
-- Loaner equipment?
-- Free coffee and snacks?
-
-Come here to talk to Front Lines and they will help you out.
-
-
----
-
 
 ## Classroom Culture
 
 Let’s all agree to:
 
 - Treat each other with respect
-- Avoid bringing distractions into class
-- Put in the time and effort required to succeed
+- Avoid creating distractions in class
+- Put in the effort required for successful learning
 
 ---
 
@@ -73,7 +45,6 @@ Please share:
 - Your name.
 - Why you’re taking this course.
 - Your favorite comfort food.
-
 
 
 ---
@@ -96,19 +67,6 @@ Jake Schwartz, Founder + CEO, General Assembly
 
 ---
 
-## Student Experience
-
-Come work on campus!
-
-We’re open:
-
-- {8am - 10pm, Monday to Friday}
-- {10am - 6pm, Saturday and Sunday}
-
-
-
----
-
 ## Moving on to Course Specifics...
 
 Okay, GA is cool!
@@ -117,32 +75,19 @@ The classmates are cool.
 
 Let's talk about the course.
 
-
-
 ---
 
-## Computer Setup
+## Technical Expectations
 
-We are expecting that:
+For this bootcamp, we are expecting that:
 
 - You are on a Mac, PC, or Linux machine
 - You can get to the internet!
-- You have Slack.
+- You are comfortable using D3 and underlying languages (JS, HTML, CSS)
+- You are familiar with basic data manipulation in JS (filter(), map(), etc.)
 
 *Wi-fi: GA-GUEST*
 *pw: yellowpencil*
-
-
----
-
-
-
-## How to get a certificate of completion
-
-1. Complete 80% of the homework
-2. Don’t miss more than 3 classes
-3. Complete the final project
-
 
 ---
 
@@ -150,72 +95,14 @@ We are expecting that:
 
 **[Class Notes](http://taq.website/)**
 
-
 ---
 
-## Homework
+## When to Use D3 & React
 
-
-Homework:
-
-  - Isn't graded, but is good practice.
-  - We will go over it the next class!
-
-
----
-
-## Your Final Project
-
-- Each day, you’ll build skills in Python and understand different ways in which you can use it to build applications.
-- At the end of the 4th week, you’ll choose a final project focus.
-- At the end of the 10th week, you’ll demo your project for the class.
-
-
----
-
-## Programming and Programming Languages
-
-**Programming**:
-- Writing step-by-step instructions in a way a computer can understand.
-
-**Programming Languages**
-
-- How we can give computers instructions.
-- There are thousands! But we're learning **Python**.
-- Specifically, Python 3.
-
-<aside class="notes">
-
-**Talking Points**:
-
-- On this and all below, don't just read the slides. Add in your own interpretation.
-
-</aside>
-
----
-
-## Key Features of Python
-
-- It's simple.
-- It's versatile.
-- It's always improving.
-- It's popular!
-
-<aside class="notes">
-
-**Talking Points**:
-
-- On this and all below, don't just read the slides. Add in your own experience and thoughts.
-
-</aside>
-
----
-
-## When to Use Python
-
-- Putting up websites.
-- Analyzing data.
-- Building robots.
+- Build websites in a dynamic framework.
+- Optimize the DOM.
+- Transform data.
+- Construct infographics.
 
 Most use cases!
 
@@ -229,16 +116,10 @@ Most use cases!
 
 ---
 
-## When NOT to Use Python
+## When NOT to Use D3 & React
 
-Other programming languages exist - Python isn't great for everything!
+There are loads of other open source frameworks and libraries - D3 and React aren't great for everything!
 
-- Mobile apps
-- Huge programs
-  - Python is interpreted - the computer reads it as it goes.
-  - Other programming languages are read in advance!
-- Sometimes too easy
-  - Easy to expect things to work that don't!
 
 <aside class="notes">
 
