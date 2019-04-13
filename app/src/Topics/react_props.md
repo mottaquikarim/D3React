@@ -3,3 +3,12 @@
 -->
 
 # Passing Props in React
+
+```javascript
+const SomeComp = props => {
+	const {foo} = props;
+	return <div>Hello {foo}</div>
+}
+
+<SomeComp foo="Taq" />
+```

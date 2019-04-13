@@ -43,15 +43,22 @@ var svg = d3.select("#my_dataviz")
   .append("svg") // you can add dimensions & margins here
 
 //Read the data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv")
-
-// When reading the csv, you need to format variables:
-function(d){
-  return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
-},
+const data = "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv"
+d3.csv(data)
+  .then(function(d){
+  	// When reading the csv, you need to format variables:
+  	return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
+})
 
   // Now you're ready to use this dataset!
 ```
 
-## D3 Code Along 1 - [Selections](https://codepen.io/jkeohan/pen/rZYRye?editors=0010)
+## [Selections](https://codepen.io/mottaquikarim/full/eoEMPQ)
+
+<p class="codepen" data-height="300" data-theme-id="820" data-default-tab="js,result" data-user="mottaquikarim" data-slug-hash="eoEMPQ" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="D3 Basics - Selections -  Code Along - 9/8">
+  <span>See the Pen <a href="https://codepen.io/mottaquikarim/pen/eoEMPQ/">
+  D3 Basics - Selections -  Code Along - 9/8</a> by Mottaqui Karim (<a href="https://codepen.io/mottaquikarim">@mottaquikarim</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 

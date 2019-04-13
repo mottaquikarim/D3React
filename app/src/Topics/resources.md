@@ -11,7 +11,4 @@
 * [D3 Module API Reference](https://github.com/d3/d3/blob/master/API.md#shapes-d3-shape)
 * [Data to Viz Guide](https://www.data-to-viz.com/)
 * [SVG Reference | w3schools](https://www.w3schools.com/graphics/svg_reference.asp)
-* []()
-* []()
-* []()
 

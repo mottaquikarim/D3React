@@ -1,6 +1,7 @@
 <!---
-{"next":"Topics/features.md","title":"Basic Terminology"}
+{"next":"Topics/react_components.md","title":"Basic Terminology"}
 -->
+
 
 # Basic Terminology
 
