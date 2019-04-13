@@ -1,0 +1,260 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>D3 Libraries &amp; Elements - Intro to D3 and React</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="../index.html"><strong aria-hidden="true">1.</strong> Guten Tag!</a></li><li><a href="../Intro/index.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../Intro/simplest.html"><strong aria-hidden="true">2.1.</strong> Basic HTML</a></li><li><a href="../Intro/codesandbox.html"><strong aria-hidden="true">2.2.</strong> Online Environments</a></li><li><a href="../Intro/local.html"><strong aria-hidden="true">2.3.</strong> Local Environment</a></li></ol></li><li><a href="../Topics/index.html"><strong aria-hidden="true">3.</strong> Topics</a></li><li><ol class="section"><li><a href="../Topics/basics.html"><strong aria-hidden="true">3.1.</strong> Basic Terminology</a></li><li><a href="../Topics/react_components.html"><strong aria-hidden="true">3.2.</strong> React Components</a></li><li><a href="../Topics/react_props.html"><strong aria-hidden="true">3.3.</strong> Passing Props in React</a></li><li><a href="../Topics/react_methods.html"><strong aria-hidden="true">3.4.</strong> Creating Methods in React</a></li><li><a href="../Topics/react_lifecycle_methods.html"><strong aria-hidden="true">3.5.</strong> Lifecycle Methods in React</a></li><li><a href="../Topics/combine_d3react.html"><strong aria-hidden="true">3.6.</strong> Combining D3 &amp; React</a></li><li><a href="../Topics/features.html"><strong aria-hidden="true">3.7.</strong> Core Features &amp; Applications</a></li><li><a href="../Topics/d3_libelem.html" class="active"><strong aria-hidden="true">3.8.</strong> D3 Libraries &amp; Elements</a></li><li><a href="../Topics/d3_selections.html"><strong aria-hidden="true">3.9.</strong> D3 Selections</a></li><li><a href="../Topics/d3_datajoins.html"><strong aria-hidden="true">3.10.</strong> D3 Data Joins</a></li><li><a href="../Topics/d3_scales.html"><strong aria-hidden="true">3.11.</strong> D3 Scales</a></li><li><a href="../Topics/resources.html"><strong aria-hidden="true">3.12.</strong> More Resources</a></li></ol></li><li><a href="../Notes/index.html"><strong aria-hidden="true">4.</strong> Notes for April 6 2019</a></li><li><ol class="section"><li><a href="../Notes/April62019.html"><strong aria-hidden="true">4.1.</strong> Notes for April 6 2019</a></li></ol></li><li><a href="../about.html"><strong aria-hidden="true">5.</strong> About</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Intro to D3 and React</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <!---
+{"next":"Topics/d3_selections.md","title":"D3 Libraries & Elements"}
+-->
+<a class="header" href="#d3-libraries--elements" id="d3-libraries--elements"><h1>D3 Libraries &amp; Elements</h1></a>
+<a class="header" href="#importing-d3-libraries" id="importing-d3-libraries"><h2>Importing D3 Libraries</h2></a>
+<p>There are several ways to access D3.</p>
+<a class="header" href="#npm" id="npm"><h4>npm</h4></a>
+<ul>
+<li>Go to the command line and type <code>npm install d3</code></li>
+</ul>
+<a class="header" href="#direct-download" id="direct-download"><h4>Direct download</h4></a>
+<ul>
+<li>Go to <a href="https://d3js.org/">https://d3js.org/</a></li>
+<li>Download the latest version of D3.js (d3.zip)</li>
+<li>Unzip the file and find the minified version of the D3 source code (d3.min.js).</li>
+<li>Paste the file into your project's 'libraries' folder.</li>
+<li>Include the path to the file in the <code>&lt;head&gt;</code> tag of your HTML doc.</li>
+</ul>
+<pre><code class="language-html">&lt;head&gt;
+    &lt;script src = &quot;/libraries/d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+</code></pre>
+<a class="header" href="#cdn-link" id="cdn-link"><h4>CDN link</h4></a>
+<p>** Add the CDN link in the <code>&lt;head&gt;</code> of your HTML doc - <a href="https://d3js.org/d3.v4.min.js">https://d3js.org/d3.v4.min.js</a></p>
+<pre><code class="language-html">&lt;head&gt;
+    &lt;script src = &quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+</code></pre>
+<a class="header" href="#svg--svg-elements" id="svg--svg-elements"><h2>SVG &amp; SVG Elements</h2></a>
+<p>SVG stands for &quot;Scalable Vector Graphics.&quot; They are perfect for D3 because SVG defines the graphics in XML format. This means that SVG images can be searched, indexed, scripted, and compressed. They can also be scaled and zoomed without losing any visual quality.</p>
+<p>Take a look - this <code>&lt;svg&gt;</code> will produce a circle and a rectangle.</p>
+<pre><code class="language-html">&lt;svg width=&quot;200&quot; height=&quot;200&quot;&gt;
+  &lt;circle cx=&quot;20&quot; cy=&quot;20&quot; r=&quot;20&quot; fill=&quot;green&quot; /&gt;
+  &lt;rect x=&quot;110&quot; y=&quot;110&quot; height=&quot;30&quot; width=&quot;30&quot; fill=&quot;blue&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<a class="header" href="#svg-group-elements-g" id="svg-group-elements-g"><h4>SVG Group Elements: <code>&lt;g&gt;</code></h4></a>
+<p>The SVG group element is a container used to group and contain child SVG elements. It is represented by the <code>&lt;g&gt;&lt;/g&gt;</code> tags, so we will refer to it from here on out as the <code>&lt;g&gt;</code> element. Here's what you need to know up front:</p>
+<ul>
+<li>You can nest <code>&lt;g&gt;</code> elements within each other.</li>
+<li>Because of this, all its attributes are inherited by its child elements.</li>
+<li>And transformations applied to a <code>&lt;g&gt;</code> element are performed on all of its child elements.</li>
+</ul>
+<p>So let's say we want to add more circles and rectangles to the <code>&lt;svg&gt;</code> above. Wouldn't it be easier if we grouped all the circles and all the rectangles together?</p>
+<pre><code class="language-html">&lt;svg width=&quot;200&quot; height=&quot;200&quot;&gt;
+  &lt;g&gt;
+    &lt;circle cx=&quot;20&quot; cy=&quot;20&quot; r=&quot;20&quot; fill=&quot;green&quot; /&gt;
+    &lt;circle cx=&quot;70&quot; cy=&quot;70&quot; r=&quot;20&quot; fill=&quot;purple&quot; /&gt;
+  &lt;/g&gt;
+  &lt;g&gt;
+    &lt;rect x=&quot;160&quot; y=&quot;160&quot; height=&quot;30&quot; width=&quot;30&quot; fill=&quot;red&quot; /&gt;
+    &lt;rect x=&quot;110&quot; y=&quot;110&quot; height=&quot;30&quot; width=&quot;30&quot; fill=&quot;blue&quot; /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>Much easier to read, right?</p>
+<p>Check out <a href="http://www.redotheweb.com/CodeFlower/">this interactive example</a> of what you'll be able to do after learning and practicing using SVG elements with D3!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../Topics/features.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../Topics/d3_selections.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../Topics/features.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../Topics/d3_selections.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

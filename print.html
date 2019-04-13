@@ -1,0 +1,833 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Intro to D3 and React</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="index.html"><strong aria-hidden="true">1.</strong> Guten Tag!</a></li><li><a href="Intro/index.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li><a href="Intro/simplest.html"><strong aria-hidden="true">2.1.</strong> Basic HTML</a></li><li><a href="Intro/codesandbox.html"><strong aria-hidden="true">2.2.</strong> Online Environments</a></li><li><a href="Intro/local.html"><strong aria-hidden="true">2.3.</strong> Local Environment</a></li></ol></li><li><a href="Topics/index.html"><strong aria-hidden="true">3.</strong> Topics</a></li><li><ol class="section"><li><a href="Topics/basics.html"><strong aria-hidden="true">3.1.</strong> Basic Terminology</a></li><li><a href="Topics/react_components.html"><strong aria-hidden="true">3.2.</strong> React Components</a></li><li><a href="Topics/react_props.html"><strong aria-hidden="true">3.3.</strong> Passing Props in React</a></li><li><a href="Topics/react_methods.html"><strong aria-hidden="true">3.4.</strong> Creating Methods in React</a></li><li><a href="Topics/react_lifecycle_methods.html"><strong aria-hidden="true">3.5.</strong> Lifecycle Methods in React</a></li><li><a href="Topics/combine_d3react.html"><strong aria-hidden="true">3.6.</strong> Combining D3 &amp; React</a></li><li><a href="Topics/features.html"><strong aria-hidden="true">3.7.</strong> Core Features &amp; Applications</a></li><li><a href="Topics/d3_libelem.html"><strong aria-hidden="true">3.8.</strong> D3 Libraries &amp; Elements</a></li><li><a href="Topics/d3_selections.html"><strong aria-hidden="true">3.9.</strong> D3 Selections</a></li><li><a href="Topics/d3_datajoins.html"><strong aria-hidden="true">3.10.</strong> D3 Data Joins</a></li><li><a href="Topics/d3_scales.html"><strong aria-hidden="true">3.11.</strong> D3 Scales</a></li><li><a href="Topics/resources.html"><strong aria-hidden="true">3.12.</strong> More Resources</a></li></ol></li><li><a href="Notes/index.html"><strong aria-hidden="true">4.</strong> Notes for April 6 2019</a></li><li><ol class="section"><li><a href="Notes/April62019.html"><strong aria-hidden="true">4.1.</strong> Notes for April 6 2019</a></li></ol></li><li><a href="about.html"><strong aria-hidden="true">5.</strong> About</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Intro to D3 and React</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <!---
+{"next":"Intro/README.md","title":"Guten Tag!","first":true}
+-->
+<a class="header" href="#intro-to" id="intro-to"><h1>Intro To...</h1></a>
+<p><img src="https://cdn-images-1.medium.com/max/2400/1*yu-ckdkzjYtjcb3o13y-qg.png" alt="d3-react" /></p>
+<p><em>🎉🎈🎂🍾🎊🍻💃</em></p>
+<p><em>A hands on and practical introduction
+to React development.</em></p>
+<a class="header" href="#react" id="react"><h2>React</h2></a>
+<p>React is a declarative, efficient, and flexible JavaScript library for building user interfaces. With React, we are able to compose complex UIs from small and isolated blocks of code called &quot;Components&quot;. A component is the equivalent of a jQuery-ui style HTML &quot;widget&quot; that encompasses both functionality and aesthetic styling. Furthermore, a component is typically defined by a data scheme - usually stored as a &quot;state&quot; variable or passed along as a &quot;prop&quot; from another component. React is &quot;declarative&quot; in that we tell it what to do and worry less about &quot;how&quot; to do it.</p>
+<!---
+{"next":"Intro/simplest.md","title":"Getting Started"}
+-->
+<a class="header" href="#getting-started" id="getting-started"><h1>Getting Started</h1></a>
+<p>Before we begin, let us explore some class tools and resources that we will be leveraging as we traverse this course. There are a few ways to install and run React - in the next few sections we will be exploring them along with details as to how to get set up with each approach.</p>
+<!---
+{"next":"Intro/codesandbox.md","title":"Basic HTML"}
+-->
+<a class="header" href="#basic-html" id="basic-html"><h1>Basic HTML</h1></a>
+<p>The simplest approach is to create an <code>index.html</code> page that contains a react development build.</p>
+<p>You can copy and paste the following into a simple HTML page:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;title&gt;Hello World&lt;/title&gt;
+    &lt;script src=&quot;https://unpkg.com/react@16/umd/react.development.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://unpkg.com/react-dom@16/umd/react-dom.development.js&quot;&gt;&lt;/script&gt;
+    
+    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script type=&quot;text/babel&quot;&gt;
+
+      ReactDOM.render(
+        &lt;h1&gt;Hello, world!&lt;/h1&gt;,
+        document.getElementById('root')
+      );
+
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Just copy-pasta this code into your favorite code editor, save as <code>index.html</code> and then open up the browser and point it to your file! React will run locally!</p>
+<a class="header" href="#important-notes" id="important-notes"><h2>Important Notes</h2></a>
+<ul>
+<li>This is NOT suitable for use in production</li>
+<li>The react resource being imported is a large development build of React</li>
+<li>Babel transform is occuring in the browser, which is very slow</li>
+</ul>
+<!---
+{"next":"Intro/local.md","title":"Online Environments"}
+-->
+<a class="header" href="#online-environments" id="online-environments"><h1>Online Environments</h1></a>
+<p>There are a lot of tools available that allow us to write react code inside the browser. Using these tools, we can write react code that more closely resembles production code.</p>
+<a class="header" href="#a-hrefhttpscodesandboxiosnewcodesandboxa" id="a-hrefhttpscodesandboxiosnewcodesandboxa"><h2><a href="https://codesandbox.io/s/new">Codesandbox</a></h2></a>
+<p>Codesandbox is nice in that it allows us to create a &quot;virtual&quot; filesystem and write code as if React's build dependencies are already pre-installed.</p>
+<p>This tool is free and ready to use from the get-go and therefore is highly recommended for usage in building small react apps to understand the underlying principles governing this framework.</p>
+<!---
+{"next":"about.md","title":"Local Environment"}
+-->
+<a class="header" href="#local-environment" id="local-environment"><h1>Local Environment</h1></a>
+<p>Because React performs many code transformations, it is imperative that our local environments have NodeJS and a few other packages preinstalled (babel, webpack, etc).</p>
+<p>Assuming these packages are pre-installed, we can create our own custom task runners that will analyze our React code, transform it and &quot;build&quot; it. However, it easy enough to utilize <strong><a href="https://github.com/facebook/create-react-app">Create React App</a></strong> to do the grunt work of pre-installing all the task runners for us.</p>
+<p>Using <code>create-react-app</code>, we are able to do everything codesandbox allows us to do, but in our local machines. </p>
+<!---
+{"next":"Topics/basics.md","title":"Topics"}
+-->
+<a class="header" href="#topics" id="topics"><h1>Topics</h1></a>
+<p>Let's learn React by doing. In particular, we will build a few simple apps to explore how React and React components work.</p>
+<a class="header" href="#d3-specific" id="d3-specific"><h2>D3 Specific</h2></a>
+<ul>
+<li>Understand D3 fundamentals</li>
+<li>Familiar with creating basic D3 charts and graphs</li>
+<li>Working with either the <a href="https://github.com/d3/d3/blob/master/CHANGES.md">D3v4 or D3v5</a> codebase.</li>
+</ul>
+<a class="header" href="#react-specific" id="react-specific"><h2>React Specific</h2></a>
+<ul>
+<li>New to <a href="https://reactjs.org/">React</a></li>
+<li>Exploring how it can be used to structure an application</li>
+<li>Interested in incorporating it into an existing or new D3 project</li>
+</ul>
+<a class="header" href="#interactive-applications" id="interactive-applications"><h2>Interactive Applications</h2></a>
+<ul>
+<li>One suggested structure for applying D3 to a React application</li>
+<li>Building a simple React application that uses D3 to visualize data</li>
+</ul>
+<p>Sadly, we won't have time to cover a comprehensive review of React + D3 approaches or push our React apps to production.</p>
+<!---
+{"next":"Topics/react_components.md","title":"Basic Terminology"}
+-->
+<a class="header" href="#basic-terminology" id="basic-terminology"><h1>Basic Terminology</h1></a>
+<p>Here are some of the basic vocabulary words we will leverage to get started:</p>
+<a class="header" href="#data" id="data"><h2>Data</h2></a>
+<p>An entity that represents what we <em>want</em> to display on the screen. <strong>DATA</strong> is the heart of any react application as it is the <em>source of truth</em> that drives all other interactions and views.</p>
+<a class="header" href="#component" id="component"><h2>Component</h2></a>
+<p>A bit of code - either a class or a function - that knows how to interpret a piece of data and render interactable elements on screen. A component encompasses the logic that defines HOW to <strong>display</strong> and <strong>mutate</strong> the data of your application</p>
+<a class="header" href="#props" id="props"><h2>Props</h2></a>
+<p>A prop, short for &quot;property&quot;, defines how we can pass data along into our components. This is the primary / preferred way to tell the component <em>what</em> the data is that we are attempting to display.</p>
+<a class="header" href="#state" id="state"><h2>State</h2></a>
+<p>A state is similar to a prop, except that <strong>it is component specific</strong>. This means that each component has the ability to maintain internal state.</p>
+<p><strong>EXAMPLE</strong>: If we have a React component that represents a user profile, the <strong>prop</strong> would be the API call that returns user data from the server. However, as the user is updating fields - we represent these changes in the <strong>state</strong> (as they can be abandoned at any time) - and once user performs an action such as <strong>SUBMIT</strong>, etc we post this data back to the DB so that the prop when user revisits profile is up to date.</p>
+<a class="header" href="#a-hrefhttpsblogbitsrcioreact-16-lifecycle-methods-how-and-when-to-use-them-f4ad31fb2282lifecyclea" id="a-hrefhttpsblogbitsrcioreact-16-lifecycle-methods-how-and-when-to-use-them-f4ad31fb2282lifecyclea"><h2><a href="https://blog.bitsrc.io/react-16-lifecycle-methods-how-and-when-to-use-them-f4ad31fb2282">Lifecycle</a></h2></a>
+<p>All react components encompass a concept of the component &quot;lifecycle&quot;. Every time a prop or state is updated, the component lifecycle is triggered.</p>
+<!---
+{"next":"Topics/react_props.md","title":"React Components"}
+-->
+<a class="header" href="#react-components" id="react-components"><h1>React Components</h1></a>
+<a class="header" href="#react-code-along-1---a-hrefhttpscodesandboxiosnewshopping-lista" id="react-code-along-1---a-hrefhttpscodesandboxiosnewshopping-lista"><h2>React Code Along 1 - <a href="https://codesandbox.io/s/new">Shopping List</a></h2></a>
+<p>Let's implement a shopping list as follows:</p>
+<ol>
+<li>It includes two fields - one for name of item and one for price</li>
+<li>On adding new item, it updates the total and the total with tax</li>
+<li>We are able to also remove and/or edit items as we see fit.</li>
+</ol>
+<a class="header" href="#react-code-along-2---a-hrefhttpscodesandboxiosnewtic-tac-toea" id="react-code-along-2---a-hrefhttpscodesandboxiosnewtic-tac-toea"><h2>React Code Along 2 - <a href="https://codesandbox.io/s/new">Tic Tac Toe</a></h2></a>
+<p>Let's implement a tic-tac-toe game as follows:</p>
+<ol>
+<li>Supports two players who alternate turns</li>
+<li>Can detect if someone has won and stop game</li>
+<li>We can &quot;track&quot; every move made and &quot;time travel&quot; through the game once completed</li>
+</ol>
+<a class="header" href="#react-code-along-3---a-hrefhttpscodepeniojkeohanpenljoagyeditors0010creating-componentsa" id="react-code-along-3---a-hrefhttpscodepeniojkeohanpenljoagyeditors0010creating-componentsa"><h2>React Code Along 3 - <a href="https://codepen.io/jkeohan/pen/LJOaGy?editors=0010">Creating Components</a></h2></a>
+<!---
+{"next":"Topics/react_methods.md","title":"Passing Props in React"}
+-->
+<a class="header" href="#passing-props-in-react" id="passing-props-in-react"><h1>Passing Props in React</h1></a>
+<pre><code class="language-javascript">const SomeComp = props =&gt; {
+    const {foo} = props;
+    return &lt;div&gt;Hello {foo}&lt;/div&gt;
+}
+
+&lt;SomeComp foo=&quot;Taq&quot; /&gt;
+</code></pre>
+<!---
+{"next":"Topics/react_lifecycle_methods.md","title":"Creating Methods in React"}
+-->
+<a class="header" href="#creating-methods-in-react" id="creating-methods-in-react"><h1>Creating Methods in React</h1></a>
+<pre><code class="language-javascript">class Button extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            label: &quot;Hello, Wrold&quot;,
+            toggle: false,
+        }
+    }
+
+    onClick = e =&gt; {
+        let {toggle, label} = this.state;
+        if (toggle) {
+            label = 'Goodbye, Wrold'
+        }
+        else {
+            label = 'Hello, Wrold'
+        }
+        toggle = !toggle
+
+        this.setState({toggle, label})
+    }
+
+    render() {
+
+        return &lt;button onClick={e =&gt; this.onClick}&gt;{toggle}&lt;/button&gt;
+    }
+}
+</code></pre>
+<!---
+{"next":"Topics/combine_d3react.md","title":"Lifecycle Methods in React"}
+-->
+<a class="header" href="#lifecycle-methods-in-react" id="lifecycle-methods-in-react"><h1>Lifecycle Methods in React</h1></a>
+<p><a href="https://levelup.gitconnected.com/componentdidmakesense-react-lifecycle-explanation-393dcb19e459"><img src="https://cdn-images-1.medium.com/max/1600/1*u8hTumGAPQMYZIvfgQMfPA.jpeg" alt="img" /></a></p>
+<!---
+{"next":"Topics/features.md","title":"Combining D3 & React"}
+-->
+<a class="header" href="#combining-d3--react" id="combining-d3--react"><h1>Combining D3 &amp; React</h1></a>
+<p><strong>The Trick</strong>: Expose DOM elements so that D3 can manipulate them and pass them back into the React framework.</p>
+<a class="header" href="#a-hrefhttpscodepeniojkeohanpen5e1b6b72afa29bd44da4430a71d693c1bar-chart-demoa" id="a-hrefhttpscodepeniojkeohanpen5e1b6b72afa29bd44da4430a71d693c1bar-chart-demoa"><h2><a href="https://codepen.io/jkeohan/pen/5e1b6b72afa29bd44da4430a71d693c1">Bar Chart Demo</a></h2></a>
+<!---
+{"next":"Topics/d3_libelem.md","title":"Core Features & Applications"}
+-->
+<a class="header" href="#core-features--applications" id="core-features--applications"><h1>Core Features &amp; Applications</h1></a>
+<a class="header" href="#what-is-d3" id="what-is-d3"><h2>What is D3?</h2></a>
+<ul>
+<li>JavaScript library for building Data Visualizations</li>
+<li>Most widely used Data Viz JS library</li>
+<li>APIs and charting elements to transform and map your data to construct detailed and engaging graphics.</li>
+<li>Most recent release is D3v5 which introduced only a small handful of changes</li>
+</ul>
+<a class="header" href="#d3s-strengths" id="d3s-strengths"><h2>D3's Strengths</h2></a>
+<ul>
+<li>Data Binding: .data(dataset)</li>
+<li>Enter/Update/Exit Methodology:  .enter()  / .exit() / .merge()</li>
+<li>Scales: d3.scaleLinear() / d3.scaleOrdinal() / d3.scaleBand()</li>
+<li>Axes: d3.axisBottom() / d3.axisTop()</li>
+<li>Generators: d3.line() / d3.pie() / d3.arc()</li>
+<li>Layouts: / d3.force()  / d3.tree() / d3.partition()</li>
+</ul>
+<a class="header" href="#what-is-react" id="what-is-react"><h2>What is React?</h2></a>
+<ul>
+<li>JavaScript library for building user interfaces</li>
+<li>Build reusable components to use throughout your application</li>
+<li>Use a one-directional data-flow to pass information into components</li>
+<li>React components will re-render based on their lifecycle</li>
+<li>Written in JSX / ES6</li>
+</ul>
+<a class="header" href="#reacts-strengths" id="reacts-strengths"><h2>React's Strengths</h2></a>
+<ul>
+<li>Reusable Components</li>
+<li>Component Lifecycle Methods (componentDidMount, componentDidUpdate)</li>
+<li>Passing Data Down as Props</li>
+<li>Updating State to initialize a re-render</li>
+<li>React Ecosystem (Redux, React Router, etc.)</li>
+</ul>
+<a class="header" href="#why-use-react" id="why-use-react"><h2>Why use React?</h2></a>
+<p><em>Why structure your code with a framework?</em></p>
+<ul>
+<li><strong>Separation of concerns</strong>: abstract your visualization code from data management</li>
+<li><strong>Reusability</strong>: create components that you can use throughout / across projects</li>
+<li><strong>Reliability</strong>: other people have written more reliable code that triggers updates</li>
+</ul>
+<p><em>Why use the <strong>React</strong> framework?</em></p>
+<ul>
+<li><strong>Popularity</strong>: quickly evolving, large open source community</li>
+<li><strong>Data centric</strong>: based on a philosophy of observing data updates</li>
+</ul>
+<a class="header" href="#react--d3---who-does-what" id="react--d3---who-does-what"><h2>React + D3 - Who does what?</h2></a>
+<a class="header" href="#react-1" id="react-1"><h4>React</h4></a>
+<ul>
+<li>Manage data, keep track of settings (i.e., what data to visualize)</li>
+<li>Append static elements to the DOM (i.e., <g> elements that hold circles)</li>
+</ul>
+<a class="header" href="#d3" id="d3"><h4>D3</h4></a>
+<ul>
+<li>Compute visual layouts</li>
+<li>Render elements that are based on binding data to DOM (i.e., circles)
+&quot;Highly contested&quot;, may depend on type of app, team, data size, etc.</li>
+</ul>
+<!---
+{"next":"Topics/d3_selections.md","title":"D3 Libraries & Elements"}
+-->
+<a class="header" href="#d3-libraries--elements" id="d3-libraries--elements"><h1>D3 Libraries &amp; Elements</h1></a>
+<a class="header" href="#importing-d3-libraries" id="importing-d3-libraries"><h2>Importing D3 Libraries</h2></a>
+<p>There are several ways to access D3.</p>
+<a class="header" href="#npm" id="npm"><h4>npm</h4></a>
+<ul>
+<li>Go to the command line and type <code>npm install d3</code></li>
+</ul>
+<a class="header" href="#direct-download" id="direct-download"><h4>Direct download</h4></a>
+<ul>
+<li>Go to <a href="https://d3js.org/">https://d3js.org/</a></li>
+<li>Download the latest version of D3.js (d3.zip)</li>
+<li>Unzip the file and find the minified version of the D3 source code (d3.min.js).</li>
+<li>Paste the file into your project's 'libraries' folder.</li>
+<li>Include the path to the file in the <code>&lt;head&gt;</code> tag of your HTML doc.</li>
+</ul>
+<pre><code class="language-html">&lt;head&gt;
+    &lt;script src = &quot;/libraries/d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+</code></pre>
+<a class="header" href="#cdn-link" id="cdn-link"><h4>CDN link</h4></a>
+<p>** Add the CDN link in the <code>&lt;head&gt;</code> of your HTML doc - <a href="https://d3js.org/d3.v4.min.js">https://d3js.org/d3.v4.min.js</a></p>
+<pre><code class="language-html">&lt;head&gt;
+    &lt;script src = &quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+</code></pre>
+<a class="header" href="#svg--svg-elements" id="svg--svg-elements"><h2>SVG &amp; SVG Elements</h2></a>
+<p>SVG stands for &quot;Scalable Vector Graphics.&quot; They are perfect for D3 because SVG defines the graphics in XML format. This means that SVG images can be searched, indexed, scripted, and compressed. They can also be scaled and zoomed without losing any visual quality.</p>
+<p>Take a look - this <code>&lt;svg&gt;</code> will produce a circle and a rectangle.</p>
+<pre><code class="language-html">&lt;svg width=&quot;200&quot; height=&quot;200&quot;&gt;
+  &lt;circle cx=&quot;20&quot; cy=&quot;20&quot; r=&quot;20&quot; fill=&quot;green&quot; /&gt;
+  &lt;rect x=&quot;110&quot; y=&quot;110&quot; height=&quot;30&quot; width=&quot;30&quot; fill=&quot;blue&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<a class="header" href="#svg-group-elements-g" id="svg-group-elements-g"><h4>SVG Group Elements: <code>&lt;g&gt;</code></h4></a>
+<p>The SVG group element is a container used to group and contain child SVG elements. It is represented by the <code>&lt;g&gt;&lt;/g&gt;</code> tags, so we will refer to it from here on out as the <code>&lt;g&gt;</code> element. Here's what you need to know up front:</p>
+<ul>
+<li>You can nest <code>&lt;g&gt;</code> elements within each other.</li>
+<li>Because of this, all its attributes are inherited by its child elements.</li>
+<li>And transformations applied to a <code>&lt;g&gt;</code> element are performed on all of its child elements.</li>
+</ul>
+<p>So let's say we want to add more circles and rectangles to the <code>&lt;svg&gt;</code> above. Wouldn't it be easier if we grouped all the circles and all the rectangles together?</p>
+<pre><code class="language-html">&lt;svg width=&quot;200&quot; height=&quot;200&quot;&gt;
+  &lt;g&gt;
+    &lt;circle cx=&quot;20&quot; cy=&quot;20&quot; r=&quot;20&quot; fill=&quot;green&quot; /&gt;
+    &lt;circle cx=&quot;70&quot; cy=&quot;70&quot; r=&quot;20&quot; fill=&quot;purple&quot; /&gt;
+  &lt;/g&gt;
+  &lt;g&gt;
+    &lt;rect x=&quot;160&quot; y=&quot;160&quot; height=&quot;30&quot; width=&quot;30&quot; fill=&quot;red&quot; /&gt;
+    &lt;rect x=&quot;110&quot; y=&quot;110&quot; height=&quot;30&quot; width=&quot;30&quot; fill=&quot;blue&quot; /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>Much easier to read, right?</p>
+<p>Check out <a href="http://www.redotheweb.com/CodeFlower/">this interactive example</a> of what you'll be able to do after learning and practicing using SVG elements with D3!</p>
+<!---
+{"next":"Topics/d3_datajoins.md","title":"D3 Selections"}
+-->
+<a class="header" href="#selections" id="selections"><h1>Selections</h1></a>
+<p>D3 employs a declarative approach, operating on arbitrary sets of nodes called <code>selections</code>. If you know another DOM framework like <a href="https://jquery.com/">jQuery</a>, you'll notice similarities in D3's syntax and principles.</p>
+<p>For example, if you want to turn the font in all <p> tags blue in JS, the code can get clunky. D3 makes it much simpler, while still allowing you to manipulate individual <code>selection</code> nodes as needed.</p>
+<pre><code class="language-javascript">d3.selectAll(&quot;p&quot;)
+    .style(&quot;color&quot;, &quot;blue&quot;);
+
+d3.select(&quot;body&quot;)
+    .style(&quot;background-color&quot;, &quot;black&quot;);
+</code></pre>
+<p>In this example, we select elements using the tag name. You can select elements using the:</p>
+<ul>
+<li>Tag name</li>
+<li>Containment</li>
+<li>Attribute values</li>
+<li>Class</li>
+<li>ID</li>
+</ul>
+<p>D3 also provides numerous methods for mutating nodes, including:</p>
+<ul>
+<li>Setting attributes or styles</li>
+<li>Registering event listeners</li>
+<li>Adding, removing or sorting nodes</li>
+<li>Changing HTML or text content</li>
+</ul>
+<p>Let's walk through an example of how you'd set up to create a data vizualization with D3.</p>
+<pre><code class="language-html">&lt;div id=&quot;my_dataviz&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>This creates a <code>&lt;div&gt;</code> where the graph will take place.</p>
+<pre><code class="language-javascript">// Append the svg object to the body of the page
+var svg = d3.select(&quot;#my_dataviz&quot;)
+  .append(&quot;svg&quot;) // you can add dimensions &amp; margins here
+
+//Read the data
+const data = &quot;https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv&quot;
+d3.csv(data)
+  .then(function(d){
+    // When reading the csv, you need to format variables:
+    return { date : d3.timeParse(&quot;%Y-%m-%d&quot;)(d.date), value : d.value }
+})
+
+  // Now you're ready to use this dataset!
+</code></pre>
+<a class="header" href="#a-hrefhttpscodepeniomottaquikarimfulleoempqselectionsa" id="a-hrefhttpscodepeniomottaquikarimfulleoempqselectionsa"><h2><a href="https://codepen.io/mottaquikarim/full/eoEMPQ">Selections</a></h2></a>
+<p class="codepen" data-height="300" data-theme-id="820" data-default-tab="js,result" data-user="mottaquikarim" data-slug-hash="eoEMPQ" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="D3 Basics - Selections -  Code Along - 9/8">
+  <span>See the Pen <a href="https://codepen.io/mottaquikarim/pen/eoEMPQ/">
+  D3 Basics - Selections -  Code Along - 9/8</a> by Mottaqui Karim (<a href="https://codepen.io/mottaquikarim">@mottaquikarim</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<!---
+{"next":"Topics/d3_scales.md","title":"D3 Data Joins"}
+-->
+<a class="header" href="#d3-data-joins" id="d3-data-joins"><h1>D3 Data Joins</h1></a>
+<p><code>selection.join(enter[, update][, exit])</code></p>
+<p>This method appends, removes and reorders elements as necessary to match the data that was previously bound by selection.data. It returns the merged enter and update selection.</p>
+<pre><code class="language-javascript">// Your starting selection
+svg.selectAll(&quot;circle&quot;)
+  .data(data)
+  .join(&quot;circle&quot;)
+    .attr(&quot;fill&quot;, &quot;none&quot;)
+    .attr(&quot;stroke&quot;, &quot;black&quot;);
+
+// Joining the data
+svg.selectAll(&quot;circle&quot;)
+  .data(data)
+  .join(
+    enter =&gt; enter.append(&quot;circle&quot;).attr(&quot;fill&quot;, &quot;green&quot;),
+    update =&gt; update.attr(&quot;fill&quot;, &quot;blue&quot;)
+  )
+    .attr(&quot;stroke&quot;, &quot;black&quot;);
+</code></pre>
+<a class="header" href="#d3-code-along-2---data-import--binding" id="d3-code-along-2---data-import--binding"><h2>D3 Code Along 2 - Data Import &amp; Binding</h2></a>
+<p><a href="https://codepen.io/mottaquikarim/pen/WWEzWM?editors=0010">Go here</a>.</p>
+<p class="codepen" data-height="300" data-theme-id="820" data-default-tab="js,result" data-user="mottaquikarim" data-slug-hash="WWEzWM" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="D3 Basics - Data Import and Binding -  Code Along  - 9/8">
+  <span>See the Pen <a href="https://codepen.io/mottaquikarim/pen/WWEzWM/">
+  D3 Basics - Data Import and Binding -  Code Along  - 9/8</a> by Mottaqui Karim (<a href="https://codepen.io/mottaquikarim">@mottaquikarim</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<a class="header" href="#d3-code-along-3---selections--events" id="d3-code-along-3---selections--events"><h2>D3 Code Along 3 - Selections &amp; Events</h2></a>
+<p><a href="https://codepen.io/mottaquikarim/full/bJrvya">Go here</a>.</p>
+<p class="codepen" data-height="300" data-theme-id="820" data-default-tab="html,result" data-user="mottaquikarim" data-slug-hash="bJrvya" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="D3 - Basics - Selections and Events - Lab - 9/8">
+  <span>See the Pen <a href="https://codepen.io/mottaquikarim/pen/bJrvya/">
+  D3 - Basics - Selections and Events - Lab - 9/8</a> by Mottaqui Karim (<a href="https://codepen.io/mottaquikarim">@mottaquikarim</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script><!---
+{"next":"Topics/resources.md","title":"D3 Scales"}
+-->
+<a class="header" href="#d3-scales" id="d3-scales"><h1>D3 Scales</h1></a>
+<a class="header" href="#a-hrefhttpscodepeniomottaquikarimpenxeljbxeditors0010applying-scalesa" id="a-hrefhttpscodepeniomottaquikarimpenxeljbxeditors0010applying-scalesa"><h2><a href="https://codepen.io/mottaquikarim/pen/xeLjbx?editors=0010">Applying Scales</a></h2></a>
+<p class="codepen" data-height="300" data-theme-id="820" data-default-tab="js,result" data-user="mottaquikarim" data-slug-hash="xeLjbx" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="D3/React - Applying Scales - Code Along  - 9/8">
+  <span>See the Pen <a href="https://codepen.io/mottaquikarim/pen/xeLjbx/">
+  D3/React - Applying Scales - Code Along  - 9/8</a> by Mottaqui Karim (<a href="https://codepen.io/mottaquikarim">@mottaquikarim</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<a class="header" href="#code" id="code"><h2>Code</h2></a>
+<pre><code class="language-javascript">//let data = [ 0, 2, 3, 7.5, 9, 10 ]
+let data = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ]
+
+let width = 460
+let height = 80
+// Continuous Input and Output
+// d3.scaleLinear()
+let scaleLinearX = d3.scaleLinear()
+  .domain(d3.extent(data, d =&gt; d))
+  .range([40,width])
+
+let scaleLinearY = d3.scaleLinear()
+  .domain([d3.min(data, d =&gt; d), d3.max(data, d =&gt; d)])
+  .range([height, 20])
+
+let scaleLinearColor = d3.scaleLinear()
+  .domain([0, d3.max(data, d =&gt; d)])
+  .range(['lightblue', 'lightgreen'])
+
+// d3.scaleSequential()
+let scaleSequential = d3.scaleSequential(d3.interpolatePiYG)
+  .domain([0,data.length-1])
+
+// Continuous Input and Discrete Output
+// d3.scaleQuantize()
+let scaleQuanitize = d3.scaleQuantize()
+  .domain([0,20])
+  .range(['lightblue', 'orange', 'lightgreen', 'pink']);
+
+// Discrete Input and Discrete Output
+// d3.scaleOrdinal()
+// let scaleOrdinal = d3.scaleOrdinal(d3.schemeBlues[3])
+//   .domain([d3.extent(data =&gt; d)])
+  // .range(['lightblue', 'lightgreen'])
+// d3.scaleBand()
+
+let scaleBand = d3.scaleBand()
+  .domain(d3.range(data.length))
+  .range([20, 480])
+  .paddingInner(0.05)
+
+let svg = d3.select('#root').append('svg')
+  .attr('width', 500).attr('height',100)
+// DATA BINDING
+let rects = svg.selectAll('rects').data(data)
+// ENTER
+rects.enter()
+  .append('rect')
+  .attr('x', (d,i) =&gt; scaleBand(i))
+  .attr('y', d =&gt; scaleLinearY(d))
+  .attr('width', scaleBand.bandwidth())
+  .attr('height', d =&gt; 90 - scaleLinearY(d))
+  // .style('fill', d =&gt; scaleQuanitize(d))
+  //  .style('fill', d =&gt; scaleOrdinal(d))
+  // .style('fill', d =&gt; scaleSequential(d))
+  .style('fill', d =&gt; scaleLinearColor(d))
+
+</code></pre>
+<!---
+{"next":"Notes/README.md","title":"More Resources"}
+-->
+<a class="header" href="#more-resources" id="more-resources"><h1>More Resources</h1></a>
+<ul>
+<li><a href="https://d3js.org/">D3JS.org</a></li>
+<li><a href="https://reactjs.org/">ReactJS.org</a></li>
+<li><a href="https://www.d3-graph-gallery.com/">D3 Graph Gallery</a></li>
+<li><a href="https://github.com/d3/d3/wiki/Gallery">Official D3 Examples Wiki</a></li>
+<li><a href="https://github.com/d3/d3/blob/master/API.md#shapes-d3-shape">D3 Module API Reference</a></li>
+<li><a href="https://www.data-to-viz.com/">Data to Viz Guide</a></li>
+<li><a href="https://www.w3schools.com/graphics/svg_reference.asp">SVG Reference | w3schools</a></li>
+</ul>
+<!---
+{"next":"Notes/April62019.md","title":"Notes for April 6 2019"}
+-->
+<a class="header" href="#notes" id="notes"><h1>Notes</h1></a>
+<p>Please find class notes here.</p>
+<!---
+{"next":"about.md","title":"Notes for April 6 2019"}
+-->
+<a class="header" href="#a-hrefhttpscodesandboxios240o4vlw1jnotes-for-april-6-2019a" id="a-hrefhttpscodesandboxios240o4vlw1jnotes-for-april-6-2019a"><h1><a href="https://codesandbox.io/s/240o4vlw1j">Notes for April 6 2019</a></h1></a>
+<pre><code class="language-javascript">import React from &quot;react&quot;;
+import ReactDOM from &quot;react-dom&quot;;
+
+import &quot;./styles.css&quot;;
+
+const ShoppingListItem = props =&gt; {
+  const label = props.label;
+  const price = props.price.toFixed(2);
+  const quantity = props.quantity;
+
+  const labelStyles = {
+    fontWeight: &quot;bolder&quot;
+  };
+
+  return (
+    &lt;div className=&quot;line-item&quot;&gt;
+      &lt;span
+        style={{
+          paddingRight: &quot;5px&quot;
+        }}
+      &gt;
+        {quantity}
+      &lt;/span&gt;
+      &lt;span style={labelStyles}&gt;{label}&lt;/span&gt;=
+      &lt;span&gt;${(quantity * price).toFixed(2)}&lt;/span&gt;
+    &lt;/div&gt;
+  );
+};
+
+const ShoppingList = props =&gt; {
+  const shoppinglist = props.shoppinglist;
+  console.log(shoppinglist)
+  let total = 0;
+  const ShoppingListItems = [];
+  for (let item of shoppinglist) {
+    console.log(item);
+    total += item.price * item.quantity;
+    ShoppingListItems.push(
+      &lt;ShoppingListItem
+        key={item.label}
+        label={item.label}
+        price={item.price}
+        quantity={item.quantity}
+      /&gt;
+    );
+  }
+
+  return (
+    &lt;div&gt;
+      {ShoppingListItems}
+      TOTAL: ${total}
+    &lt;/div&gt;
+  );
+};
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      label: &quot;&quot;,
+      price: 0,
+      quantity: 0,
+      currentTotal: null,
+      shoppingList: [],
+    };
+  }
+
+  addToList() {
+    const shoppingList = this.state.shoppingList;
+
+    shoppingList.push({
+      &quot;label&quot;: this.state.label,
+      &quot;price&quot;: parseFloat(this.state.price, 10),
+      &quot;quantity&quot;: parseInt(this.state.quantity, 10),
+    })
+ 
+    // make DB call to POST / PUT here
+    this.setState({
+      label: &quot;&quot;,
+      price: 0,
+      quantity: 0,
+      currentTotal: null,
+      shoppingList: shoppingList,
+    })
+  }
+
+  updateState(e, name) {
+    const oldState = this.state;
+    oldState[name] = e.target.value;
+    if (oldState.price &amp;&amp; oldState.quantity) {
+      oldState.currentTotal = oldState.price * oldState.quantity
+    }
+    else {
+      oldState.currentTotal = null;
+    }
+    this.setState(oldState)
+  }
+
+  render() {
+    const inputStyle = {
+      padding: '10px',
+      fontSize: '14px',
+      margin: '5px',
+      display: 'block',
+      width: '100%'
+    }
+
+    const buttonStyle = {
+      width: '100%',
+      border: 'none',
+      fontSize: '14px',
+      fontWeight: 'bolder',
+      backgroundColor: 'black',
+      color: 'white',
+      margin: '5px',
+      padding: '10px',
+    }
+
+    const currentTotal = this.state.currentTotal ? (&quot;$&quot; + this.state.currentTotal): null
+    console.log(this.state.shoppingList)
+    return ( 
+      &lt;div className=&quot;App&quot;&gt;
+        &lt;input style={inputStyle} onChange={(e) =&gt; this.updateState(e, &quot;label&quot;)} type=&quot;text&quot; placeholder=&quot;Shopping Item Label&quot; /&gt;
+        &lt;input style={inputStyle} onChange={(e) =&gt; this.updateState(e, &quot;price&quot;)} type=&quot;number&quot; step=&quot;0.01&quot; placeholder=&quot;Shopping Item Price&quot; /&gt;
+        &lt;input style={inputStyle} onChange={(e) =&gt; this.updateState(e, &quot;quantity&quot;)} type=&quot;number&quot; placeholder=&quot;Shopping Item Quantity&quot; /&gt;
+        &lt;span&gt;{currentTotal}&lt;/span&gt;
+        &lt;button onClick={() =&gt; this.addToList()} style={buttonStyle}&gt;Add!&lt;/button&gt;
+        &lt;ShoppingList shoppinglist={this.state.shoppingList} /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+// const shoppinglistArr = [
+//   {
+//     label: &quot;Eggs&quot;,
+//     price: 1.99,
+//     quantity: 1
+//   },
+//   {
+//     label: &quot;Coffee&quot;,
+//     price: 8.99,
+//     quantity: 5,
+//   },
+//   {
+//     label: &quot;chicken&quot;,
+//     price: 5.99,
+//     quantity: 10,
+//   }
+// ];
+
+const rootElement = document.getElementById(&quot;root&quot;);
+ReactDOM.render(&lt;App /&gt;, rootElement);
+
+</code></pre>
+<!---
+{"next": "","title": "About"}
+-->
+<a class="header" href="#about" id="about"><h1>About</h1></a>
+<p>Built by your boy <strong><a href="https://taqkarim.dev">Taq Karim</a></strong> with <strong><a href="https://github.com/rust-lang-nursery/mdBook">this</a></strong>, <strong><a href="https://travis-ci.org/">this</a></strong>, ☕☕☕ and ❤️.</p>
+<p><a href="https://travis-ci.org/mottaquikarim/PythonProgramming"><img src="https://travis-ci.org/mottaquikarim/PythonProgramming.svg?branch=master" alt="Build Status" /></a></p>
+<p><em>Find the project source on <strong><a href="https://github.com/mottaquikarim/PythonProgramming">github</a></strong>.</em></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
